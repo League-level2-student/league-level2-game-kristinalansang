@@ -34,27 +34,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     */
 	
 	GamePanel(){
-		//timer = new Timer(1000/60,this);
+		timer = new Timer(1000/60,this);
 		titleFont = new Font("Arial",Font.BOLD, 48);
 		titleFont1 = new Font("Arial", Font.BOLD, 25);
 		ball = new ball(250,700,50,50);
 		
-		/*
-		rocket = new Rocketship(250, 700, 50, 50);
-		manager = new ObjectManager(rocket);
-		
-		
-		try {
-            alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
-            rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
-            bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
-            spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
-		} catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-    }
-*/
 
 	}
 	
@@ -78,7 +62,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	@Override
 	public void paintComponent(Graphics g){
-		//gameobject.draw(g);
 		if(currentState == MENU_STATE){
             drawMenuState(g);
 		}else if(currentState == GAME_STATE){
@@ -97,12 +80,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
-			platform.x += rocket.speed;
+			platform.x += platform.speed;
 		else if(e.getKeyCode() == KeyEvent.VK_LEFT)
-			platform.x -= rocket.speed;
+			platform.x -= platform.speed;
 
 		if(e.getKeyCode() ==KeyEvent.VK_SPACE && currentState == MENU_STATE)
-			JOptionPane.showConfirmDialog(null, "Use arrow keys to move left and right. Try not to die");
+			JOptionPane.showConfirmDialog(null, "Use arrow keys to move left and right. Don't let the ball go below the platform");
 			
 		
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -134,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		//manager.manageEnemies();
 		manager.checkCollision();
 		manager.purgeObjects();
-		if(!rocket.isAlive)
+		if(!ball.isAlive)
 			currentState = END_STATE;
 	}
 	
@@ -144,7 +127,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
 		
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
@@ -157,7 +140,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawGameState(Graphics g) {
-		//g.drawImage(spaceImg, WIDTH, HEIGHT, null);
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
+		
 		manager.draw(g);
 		
 	}
@@ -165,7 +150,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
 		
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);

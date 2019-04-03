@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 
 public class Ball extends GameObject {
 
@@ -5,7 +6,7 @@ public class Ball extends GameObject {
 	
 	public Ball(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		
+		speed = 5;
 		
 	}
 	
@@ -14,6 +15,6 @@ public class Ball extends GameObject {
 	}
 	
 	void draw(Graphics g) {
-		g.drawRect(x,y,width,height);
+		g.drawOval(x, y, width, height);;
 	}
 }
