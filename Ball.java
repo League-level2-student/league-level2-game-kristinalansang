@@ -27,7 +27,7 @@ public class Ball extends GameObject {
 		if(x <= 0)//if  goes out of bounds on the left
 			moveright = true;
 		
-		if(x => WIDTH)//if goes out of bounds on the right
+		if(x >= WIDTH)//if goes out of bounds on the right
 			moveright = false;
 		
 		if(moveup)
