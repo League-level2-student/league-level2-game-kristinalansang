@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Bricks extends GameObject{
 
@@ -10,6 +13,7 @@ public class Bricks extends GameObject{
 	}
 	
 	void draw(Graphics g) {
-		g.drawRect(x,y,width, height);
+		g.setColor(Color.ORANGE);
+		g.fillRect(x, y, width, height);
 	}
 }

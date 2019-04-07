@@ -23,23 +23,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int currentState = MENU_STATE;
 	Font titleFont, titleFont1;
 	Ball ball;
-	ObjectManager manager;
-	int level;
-	
-	/*
-    public static BufferedImage alienImg;
-    public static BufferedImage rocketImg;
-    public static BufferedImage bulletImg;
-    public static BufferedImage spaceImg;
-    */
+	Platform platform;
+	ObjectManager manager;	
 	
 	GamePanel(){
 		timer = new Timer(1000/60,this);
 		titleFont = new Font("Arial",Font.BOLD, 48);
 		titleFont1 = new Font("Arial", Font.BOLD, 25);
-		ball = new ball(250,700,50,50);
-		
-
+		ball = new Ball (250,700,50,50);
+		platform = new Platform(250,750,50,10);
+		manager = new ObjectManager(ball, platform);
 	}
 	
 	@Override
@@ -90,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if(currentState == END_STATE) {
-				//rocket = new Rocketship(250, 700, 50, 50);
+				platform = new Platform(250,750,50,10);
 				ball = new Ball(250,700,50,50);
 				manager = new ObjectManager(rocket);
 			}
@@ -140,24 +133,38 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawGameState(Graphics g) {
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
 		
 		manager.draw(g);
-		
 	}
 
 
 	void drawEndState(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
+		if(manager.brickList.size() == 0) {//if there's no bricks left == win
+			g.setColor(Color.GREEN));
+			g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
+			
+			g.setFont(titleFont);
+			g.setColor(Color.BLACK);
+			g.drawString("YOU WON", 100, 200);
+			
+			g.setFont(titleFont1);
+			g.drawString("You broke all the bricks", 125, 350);
+			g.drawString("Press ENTER to restart",110, 500);
+		}
+		else {//otherwise...lose
+			g.setColor(Color.RED);
+			g.fillRect(0, 0, BrickBreaker.WIDTH, BrickBreaker.HEIGHT);
+			
+			g.setFont(titleFont);
+			g.setColor(Color.BLACK);
+			g.drawString("Game Over", 100, 200);
+			
+			g.setFont(titleFont1);
+			g.drawString("You broke " + manager.getScore() + " bricks", 125, 350);
+			g.drawString("Press ENTER to restart",110, 500);
+		}
 		
-		g.setFont(titleFont);
-		g.setColor(Color.BLACK);
-		g.drawString("Game Over", 100, 200);
-		
-		g.setFont(titleFont1);
-		g.drawString("You got " + manager.getScore() + " points", 125, 350);
-		g.drawString("Press ENTER to restart",110, 500);
 	}
 }

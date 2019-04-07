@@ -13,7 +13,7 @@ public class BrickBreaker {
 		game = new GamePanel();
 	}
 	
-	public static void main(String[] args)
+	void main(String[] args)
 	{
 		BrickBreaker b = new BrickBreaker();
 		b.setup();
